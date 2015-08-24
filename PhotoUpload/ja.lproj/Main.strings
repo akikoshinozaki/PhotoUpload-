@@ -1,0 +1,24 @@
+
+/* Class = "UIBarButtonItem"; title = "前画面へ戻る"; ObjectID = "5CB-cx-X59"; */
+"5CB-cx-X59.title" = "前画面へ戻る";
+
+/* Class = "UILabel"; text = "バージョンラベル"; ObjectID = "5oa-qQ-5HX"; */
+"5oa-qQ-5HX.text" = "バージョンラベル";
+
+/* Class = "UILabel"; text = "会社名"; ObjectID = "BmA-sm-KIm"; */
+"BmA-sm-KIm.text" = "会社名";
+
+/* Class = "UIBarButtonItem"; title = "前画面へ戻る"; ObjectID = "DC6-52-jJJ"; */
+"DC6-52-jJJ.title" = "前画面へ戻る";
+
+/* Class = "UIBarButtonItem"; title = "送信"; ObjectID = "Wmt-Wn-46t"; */
+"Wmt-Wn-46t.title" = "送信";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "ZGL-ST-k9k"; */
+"ZGL-ST-k9k.title" = "Item";
+
+/* Class = "UIBarButtonItem"; title = "前画面へ戻る"; ObjectID = "iTm-Oo-STr"; */
+"iTm-Oo-STr.title" = "前画面へ戻る";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "ncb-lJ-kN7"; */
+"ncb-lJ-kN7.title" = "キャンセル";
