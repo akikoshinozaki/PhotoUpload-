@@ -226,7 +226,7 @@
 //        urlList = [[NSArray alloc] init];
 //        urlList = [infoDic3 objectForKey:@"URL"];
 
-        urlList = [[NSArray alloc] initWithObjects:@"http://www.apple.com/jp/",@"http://www.google.co.jp",@"http://www.yahoo.co.jp",@"http://www.disney.co.jp/home.html",@"http://www.maruhachi.co.jp", nil];
+        urlList = [[NSArray alloc] initWithObjects:@"https://sateraito-apps-sso.appspot.com/a/maruhachi.co.jp/login",@"http://www.google.co.jp",@"http://www.yahoo.co.jp",@"http://www.disney.co.jp/home.html",@"http://www.maruhachi.co.jp", nil];
 
         WebViewController *webView = [self.storyboard instantiateViewControllerWithIdentifier:@"webView"];
         webView.buttonTag = _buttonTag;

@@ -63,11 +63,11 @@
     [UIFont fontWithName:@"IPAGothic" size:14];
     //表示するURLを取得
 //    [self getUrl];
-//    url = _urlList[_buttonTag];
+    url = _urlList[_buttonTag];
 //    NSLog(@"url = %@",url);
-    url = @"http://oktss.xsrv.jp/shinozaki/index.php";
-    NSString *deviceName = [[UIDevice currentDevice] name];
-    NSString *iPadName = [deviceName uppercaseString];
+//    url = @"http://oktss.xsrv.jp/shinozaki/index.php";
+//    NSString *deviceName = [[UIDevice currentDevice] name];
+//    NSString *iPadName = [deviceName uppercaseString];
 
     //初期URLのページを要求・表示
     [self makeRequest];

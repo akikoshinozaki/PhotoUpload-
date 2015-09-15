@@ -11,7 +11,6 @@
 #import <AdSupport/AdSupport.h>
 #import "AppDelegate.h"
 
-
 @interface Json : NSObject
 +(NSDictionary *)getJson:(NSString *)buttonCD;
 
