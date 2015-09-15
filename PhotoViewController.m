@@ -193,8 +193,8 @@
     [_indicator startAnimating];
     [self.view addSubview:_indicator];
     
-    //UIImageをpngに変換(60%に圧縮)
-    float resize = 0.6;
+    //UIImageをpngに変換(圧縮率を指定)
+    float resize = 0.4;
     UIImage* originalImage = _myImageView.image;
     CGSize size = CGSizeMake(originalImage.size.width*resize, originalImage.size.height*resize);
     UIGraphicsBeginImageContext(size);
@@ -206,8 +206,7 @@
     
     //---ここからPOSTDATAの作成---
     //http://kyuuuuuuuuuuri.hatenablog.com/entry/20130414/1365910741
-
-    NSString *urlString = @"http://oktss.xsrv.jp/shinozaki/file_upload.php";
+    NSString *urlString = @"http://oktss03.xsrv.jp/shinozaki/file_upload.php";
     NSString *boundary = @"---------------------------168072824752491622650073";
     //リクエストのオブジェクトを作成
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
@@ -228,8 +227,7 @@
     
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
     [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-    
-    
+
     // テキスト部分の設定
     [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data;"] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -247,7 +245,7 @@
     [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    
+
     [request setHTTPBody:body];
     
     //リクエストの送信
@@ -299,15 +297,6 @@
 }
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 //送信ボタンが押された時の処理
 - (IBAction)sendButton:(UIBarButtonItem *)sender {
