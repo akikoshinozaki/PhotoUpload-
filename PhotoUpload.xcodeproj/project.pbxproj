@@ -9,9 +9,13 @@
 /* Begin PBXBuildFile section */
 		C30E077B1B99529A00C22465 /* upload76.png in Resources */ = {isa = PBXBuildFile; fileRef = C30E07791B99529A00C22465 /* upload76.png */; };
 		C30E077C1B99529A00C22465 /* upload152.png in Resources */ = {isa = PBXBuildFile; fileRef = C30E077A1B99529A00C22465 /* upload152.png */; };
+		C355A46C1CAB68B400D21EB1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C355A4641CAB68B400D21EB1 /* Info.plist */; };
+		C355A46D1CAB68B400D21EB1 /* LUKeychainAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = C355A4671CAB68B400D21EB1 /* LUKeychainAccess.m */; };
+		C355A46E1CAB68B400D21EB1 /* LUKeychainServices.m in Sources */ = {isa = PBXBuildFile; fileRef = C355A46B1CAB68B400D21EB1 /* LUKeychainServices.m */; };
 		C3766C5E1B43C4D800E846CB /* Json.m in Sources */ = {isa = PBXBuildFile; fileRef = C3766C5D1B43C4D800E846CB /* Json.m */; };
 		C3766C611B43CFBE00E846CB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3766C601B43CFBE00E846CB /* SecondViewController.m */; };
 		C3766C641B43CFD800E846CB /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3766C631B43CFD800E846CB /* ThirdViewController.m */; };
+		C3C6C0BD1C6DC1E100AB852B /* upload167.png in Resources */ = {isa = PBXBuildFile; fileRef = C3C6C0BC1C6DC1E100AB852B /* upload167.png */; };
 		C3D992A11B392630005D013F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992A01B392630005D013F /* main.m */; };
 		C3D992A41B392630005D013F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992A31B392630005D013F /* AppDelegate.m */; };
 		C3D992A71B392630005D013F /* PhotoUpload.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C3D992A51B392630005D013F /* PhotoUpload.xcdatamodeld */; };
@@ -20,7 +24,6 @@
 		C3D992AF1B392630005D013F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D992AE1B392630005D013F /* Images.xcassets */; };
 		C3D992BE1B392630005D013F /* PhotoUploadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992BD1B392630005D013F /* PhotoUploadTests.m */; };
 		C3D992C91B3928D6005D013F /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992C81B3928D6005D013F /* PhotoViewController.m */; };
-		C3D992CB1B392A88005D013F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D992CA1B392A88005D013F /* AdSupport.framework */; };
 		C3D992CD1B392AA9005D013F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D992CC1B392AA9005D013F /* UIKit.framework */; };
 		C3D992CF1B392AB8005D013F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D992CE1B392AB8005D013F /* Foundation.framework */; };
 		C3D992D11B392AC2005D013F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D992D01B392AC2005D013F /* CoreGraphics.framework */; };
@@ -43,12 +46,22 @@
 		C30E07791B99529A00C22465 /* upload76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload76.png; sourceTree = "<group>"; };
 		C30E077A1B99529A00C22465 /* upload152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload152.png; sourceTree = "<group>"; };
 		C31851991B68BC9B004BA645 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		C355A4641CAB68B400D21EB1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C355A4651CAB68B400D21EB1 /* LUKeychainAccess-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LUKeychainAccess-Prefix.pch"; sourceTree = "<group>"; };
+		C355A4661CAB68B400D21EB1 /* LUKeychainAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUKeychainAccess.h; sourceTree = "<group>"; };
+		C355A4671CAB68B400D21EB1 /* LUKeychainAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LUKeychainAccess.m; sourceTree = "<group>"; };
+		C355A4681CAB68B400D21EB1 /* LUKeychainAccessAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUKeychainAccessAccessibility.h; sourceTree = "<group>"; };
+		C355A4691CAB68B400D21EB1 /* LUKeychainErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUKeychainErrorHandler.h; sourceTree = "<group>"; };
+		C355A46A1CAB68B400D21EB1 /* LUKeychainServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUKeychainServices.h; sourceTree = "<group>"; };
+		C355A46B1CAB68B400D21EB1 /* LUKeychainServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LUKeychainServices.m; sourceTree = "<group>"; };
+		C355A46F1CAB691D00D21EB1 /* PhotoUpload.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PhotoUpload.entitlements; sourceTree = "<group>"; };
 		C3766C5C1B43C4D800E846CB /* Json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Json.h; path = ../Json.h; sourceTree = "<group>"; };
 		C3766C5D1B43C4D800E846CB /* Json.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Json.m; path = ../Json.m; sourceTree = "<group>"; };
 		C3766C5F1B43CFBE00E846CB /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondViewController.h; path = ../SecondViewController.h; sourceTree = "<group>"; };
 		C3766C601B43CFBE00E846CB /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondViewController.m; path = ../SecondViewController.m; sourceTree = "<group>"; };
 		C3766C621B43CFD800E846CB /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThirdViewController.h; path = ../ThirdViewController.h; sourceTree = "<group>"; };
 		C3766C631B43CFD800E846CB /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThirdViewController.m; path = ../ThirdViewController.m; sourceTree = "<group>"; };
+		C3C6C0BC1C6DC1E100AB852B /* upload167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload167.png; sourceTree = "<group>"; };
 		C3D9929B1B392630005D013F /* PhotoUpload.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoUpload.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D9929F1B392630005D013F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3D992A01B392630005D013F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -64,7 +77,6 @@
 		C3D992BD1B392630005D013F /* PhotoUploadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoUploadTests.m; sourceTree = "<group>"; };
 		C3D992C71B3928D6005D013F /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoViewController.h; path = ../PhotoViewController.h; sourceTree = "<group>"; };
 		C3D992C81B3928D6005D013F /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoViewController.m; path = ../PhotoViewController.m; sourceTree = "<group>"; };
-		C3D992CA1B392A88005D013F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		C3D992CC1B392AA9005D013F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C3D992CE1B392AB8005D013F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C3D992D01B392AC2005D013F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -82,7 +94,6 @@
 				C3D992D11B392AC2005D013F /* CoreGraphics.framework in Frameworks */,
 				C3D992CF1B392AB8005D013F /* Foundation.framework in Frameworks */,
 				C3D992CD1B392AA9005D013F /* UIKit.framework in Frameworks */,
-				C3D992CB1B392A88005D013F /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,11 +107,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C355A4631CAB68B400D21EB1 /* LUKeychainAccess */ = {
+			isa = PBXGroup;
+			children = (
+				C355A4641CAB68B400D21EB1 /* Info.plist */,
+				C355A4651CAB68B400D21EB1 /* LUKeychainAccess-Prefix.pch */,
+				C355A4661CAB68B400D21EB1 /* LUKeychainAccess.h */,
+				C355A4671CAB68B400D21EB1 /* LUKeychainAccess.m */,
+				C355A4681CAB68B400D21EB1 /* LUKeychainAccessAccessibility.h */,
+				C355A4691CAB68B400D21EB1 /* LUKeychainErrorHandler.h */,
+				C355A46A1CAB68B400D21EB1 /* LUKeychainServices.h */,
+				C355A46B1CAB68B400D21EB1 /* LUKeychainServices.m */,
+			);
+			path = LUKeychainAccess;
+			sourceTree = "<group>";
+		};
 		C3D992921B392630005D013F = {
 			isa = PBXGroup;
 			children = (
 				C30E07791B99529A00C22465 /* upload76.png */,
 				C30E077A1B99529A00C22465 /* upload152.png */,
+				C3C6C0BC1C6DC1E100AB852B /* upload167.png */,
 				C3F182291B465C7900541182 /* btn_green.png */,
 				C3D992D31B392F19005D013F /* btn053_09.png */,
 				C3D9929D1B392630005D013F /* PhotoUpload */,
@@ -122,6 +149,7 @@
 		C3D9929D1B392630005D013F /* PhotoUpload */ = {
 			isa = PBXGroup;
 			children = (
+				C355A46F1CAB691D00D21EB1 /* PhotoUpload.entitlements */,
 				C3766C5C1B43C4D800E846CB /* Json.h */,
 				C3766C5D1B43C4D800E846CB /* Json.m */,
 				C3D992A21B392630005D013F /* AppDelegate.h */,
@@ -173,10 +201,10 @@
 		C3D992D21B392ACB005D013F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C355A4631CAB68B400D21EB1 /* LUKeychainAccess */,
 				C3D992D01B392AC2005D013F /* CoreGraphics.framework */,
 				C3D992CE1B392AB8005D013F /* Foundation.framework */,
 				C3D992CC1B392AA9005D013F /* UIKit.framework */,
-				C3D992CA1B392A88005D013F /* AdSupport.framework */,
 			);
 			name = Frameworks;
 			path = PhotoUpload;
@@ -226,12 +254,17 @@
 		C3D992931B392630005D013F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = administrator;
 				TargetAttributes = {
 					C3D9929A1B392630005D013F = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = G4JZMC2GW3;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					C3D992B61B392630005D013F = {
 						CreatedOnToolsVersion = 6.2;
@@ -263,7 +296,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C355A46C1CAB68B400D21EB1 /* Info.plist in Resources */,
 				C3F1822A1B465C7900541182 /* btn_green.png in Resources */,
+				C3C6C0BD1C6DC1E100AB852B /* upload167.png in Resources */,
 				C30E077B1B99529A00C22465 /* upload76.png in Resources */,
 				C3D992D41B392F19005D013F /* btn053_09.png in Resources */,
 				C3D992AD1B392630005D013F /* Main.storyboard in Resources */,
@@ -286,12 +321,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C355A46E1CAB68B400D21EB1 /* LUKeychainServices.m in Sources */,
 				C3D992C91B3928D6005D013F /* PhotoViewController.m in Sources */,
 				C3D992A41B392630005D013F /* AppDelegate.m in Sources */,
 				C3766C641B43CFD800E846CB /* ThirdViewController.m in Sources */,
 				C3D992A11B392630005D013F /* main.m in Sources */,
 				C3F182281B4626AE00541182 /* WebViewController.m in Sources */,
 				C3766C611B43CFBE00E846CB /* SecondViewController.m in Sources */,
+				C355A46D1CAB68B400D21EB1 /* LUKeychainAccess.m in Sources */,
 				C3D992AA1B392630005D013F /* FirstViewController.m in Sources */,
 				C3D992A71B392630005D013F /* PhotoUpload.xcdatamodeld in Sources */,
 				C3766C5E1B43C4D800E846CB /* Json.m in Sources */,
@@ -349,6 +386,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -411,9 +449,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PhotoUpload/PhotoUpload.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PhotoUpload/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.oktss.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -423,10 +463,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PhotoUpload/PhotoUpload.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				INFOPLIST_FILE = PhotoUpload/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.oktss.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bfc607e0-dcdb-413f-8566-fb076cc7ab30";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -444,6 +487,7 @@
 				);
 				INFOPLIST_FILE = PhotoUploadTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.oktss.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoUpload.app/PhotoUpload";
 			};
@@ -459,6 +503,7 @@
 				);
 				INFOPLIST_FILE = PhotoUploadTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.oktss.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoUpload.app/PhotoUpload";
 			};

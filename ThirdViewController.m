@@ -9,20 +9,16 @@
 #import "ThirdViewController.h"
 
 @interface ThirdViewController ()
-- (IBAction)backButton:(UIBarButtonItem *)sender;
 
 @end
 
 @implementation ThirdViewController
 {
-    UIButton *myButton;
     NSDictionary *infoDic3;
     NSArray *titleList;
     NSArray *urlList;
     BOOL *loadSuccessful;
-    UIDevice *device;
-    UIView *portrait;
-    UIView *landscape;
+//    UIDevice *device;
 
     
 }
@@ -30,135 +26,82 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self.navigationController setToolbarHidden:NO];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"前画面に戻る"
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self action:@selector(backButton)];
+    [self setToolbarItems:[NSArray arrayWithObjects:backButtonItem, nil] animated:YES];
+
+
     [self saveDefault];
     [self callDefault];
     
     titleList = [infoDic3 objectForKey:@"TITLE"];
     _gyomuCD3 = [infoDic3 objectForKey:@"BUTTON"];
-    device = [UIDevice currentDevice];
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    //縦向きで起動した時
-    if (orientation == UIDeviceOrientationPortrait){
-        portrait = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.WIDTH, self.view.HEIGHT-44)];
-        landscape = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.HEIGHT, self.view.WIDTH-44)];
+    
+    
+    for (int i=0; i<titleList.count; i++){
+        UIButton *myButton = [[UIButton alloc] init];
+        UIImage *img = [UIImage imageNamed:@"btn_green.png"];
+        myButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [myButton setBackgroundImage:img forState:UIControlStateNormal];
+        [myButton setTitle:titleList[i] forState:UIControlStateNormal];
+        [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        myButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        myButton.tag = i;
+        myButton.translatesAutoresizingMaskIntoConstraints = NO;
         
-        [self.view addSubview:portrait];
-        [self buttonRect:portrait];
-        //横向きで起動した時
-    }else {
-        //iOS8以上の場合
-        if ([device.systemVersion floatValue] >= 8.0) {
-            portrait = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.HEIGHT, self.view.WIDTH-44)];
-            landscape = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.WIDTH, self.view.HEIGHT-44)];
-            //iOS7の場合
-        }else {
-            portrait = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.WIDTH, self.view.HEIGHT-44)];
-            landscape = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.HEIGHT, self.view.WIDTH-44)];
-        }
+        [self.view addSubview:myButton];
+        [myButton addTarget:self
+                     action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
         
-        [self.view addSubview:landscape];
-        [self buttonRect:landscape];
+        
+        //幅
+        NSLayoutConstraint *constraint00 = [NSLayoutConstraint constraintWithItem:myButton
+                                                                        attribute:NSLayoutAttributeWidth
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                                       multiplier:1.0 constant:300.0];
+        [self.view addConstraint:constraint00];
+        
+        //高さ
+        NSLayoutConstraint *constraint01 = [NSLayoutConstraint constraintWithItem:myButton
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:nil
+                                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                                       multiplier:1.0 constant:60.0];
+        [self.view addConstraint:constraint01];
+        
+        
+        //横方向ビュー合わせ
+        NSLayoutConstraint *constraint02 = [NSLayoutConstraint constraintWithItem:myButton
+                                                                        attribute:NSLayoutAttributeCenterX
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeCenterX
+                                                                       multiplier:1.0 constant:0.0];
+        [self.view addConstraint:constraint02];
+        
+        //縦方向ビュー合わせ
+        NSLayoutConstraint *constraint03 = [NSLayoutConstraint constraintWithItem:myButton
+                                                                        attribute:NSLayoutAttributeTop
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.view
+                                                                        attribute:NSLayoutAttributeTop
+                                                                       multiplier:1.0 constant:150 + i * 90.0];
+        [self.view addConstraint:constraint03];
+        
+        
         
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)buttonRect :(UIView *)view {
-    //ボタンの数が7個以下の場合の配置（1列）
-    NSLog(@"%@", titleList);
-    if (titleList.count < 7){
-        for (int i=0; i<titleList.count; i++){
-            myButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
-            UIImage *img = [UIImage imageNamed:@"btn_green.png"];
-            CGRect buttonRect = CGRectMake((view.WIDTH - myButton.WIDTH)/2, 150+i*90, myButton.WIDTH, myButton.HEIGHT);
-            
-            myButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [myButton setBackgroundImage:img forState:UIControlStateNormal];
-            [myButton setTitle:titleList[i] forState:UIControlStateNormal];
-            [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [myButton sizeToFit];
-            myButton.frame = buttonRect;
-            myButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-            myButton.tag = i;
-            [view addSubview:myButton];
-            [myButton addTarget:self
-                         action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-        }
-        //ボタンの数が7個以上の場合の配置（2列）
-    }else {
-        for (int i=0; i<titleList.count; i++){
-            myButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
-            UIImage *img = [UIImage imageNamed:@"btn_green.png"];
-            CGRect buttonRect = CGRectMake(view.WIDTH/2 - (20+myButton.WIDTH)*((i+1)%2)+20*(i%2), 150+i/2*90, myButton.WIDTH, myButton.HEIGHT);
-            
-            myButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [myButton setBackgroundImage:img forState:UIControlStateNormal];
-            [myButton setTitle:titleList[i] forState:UIControlStateNormal];
-            [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [myButton sizeToFit];
-            myButton.frame = buttonRect;
-            myButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-            myButton.tag = i;
-            
-            [view addSubview:myButton];
-            [myButton addTarget:self
-                         action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-            
-        }
-        
-    }
-    
-    
-}
-
-- (BOOL)shouldAutorotate
-{
-    switch (device.orientation) {
-        case UIDeviceOrientationPortrait:
-            [self.view addSubview:portrait];
-            [self buttonRect:portrait];
-            [portrait setHidden:NO];
-            [landscape setHidden:YES];
-            NSLog(@"PORTRAIT");
-            return YES;
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-            [self.view addSubview:landscape];
-            [self buttonRect:landscape];
-            [portrait setHidden:YES];
-            [landscape setHidden:NO];
-            NSLog(@"LEFT");
-            return  YES;
-            break;
-            
-        case UIDeviceOrientationLandscapeRight:
-            [self.view addSubview:landscape];
-            [self buttonRect:landscape];
-            [portrait setHidden:YES];
-            [landscape setHidden:NO];
-            NSLog(@"RIGHT");
-            return YES;
-            break;
-        case UIDeviceOrientationPortraitUpsideDown:
-            return NO;
-            break;
-        default:
-            return YES;
-            break;
-    }
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    //return UIInterfaceOrientationMaskPortrait;
-    return (UIInterfaceOrientationMaskPortrait
-            | UIInterfaceOrientationMaskLandscapeRight
-            | UIInterfaceOrientationMaskLandscapeLeft);
 }
 
 
@@ -244,13 +187,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     UIImage *img = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     
     // 最初の画面に戻る
+
     [self dismissViewControllerAnimated:NO completion:nil];
     
     PhotoViewController *photo = [self.storyboard instantiateViewControllerWithIdentifier:@"photo"];
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     delegate.image = img;
     
-    [self presentViewController:photo animated:YES completion:nil];
+    [self.navigationController pushViewController:photo animated:YES];
     
 }
 
@@ -258,15 +202,15 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     // 最初の画面に戻る
-    [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
     
     // キャンセルされたときの処理を記述・・・
 }
 
 
-- (IBAction)backButton:(UIBarButtonItem *)sender {
+- (void)backButton {
     //前画面に戻る
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 

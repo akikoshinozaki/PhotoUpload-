@@ -22,8 +22,6 @@
     NSString *url;
     BOOL loadSuccessful;
     UIDevice *device;
-    CGRect portrait;
-    CGRect landscape;
     
 }
 
@@ -36,38 +34,13 @@
     webView.scalesPageToFit = YES;
     
     device = [UIDevice currentDevice];
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    //縦向きで起動した時
-    if (orientation == UIDeviceOrientationPortrait){
-        portrait = CGRectMake(0, 0, self.view.WIDTH, self.view.HEIGHT-44);
-        landscape = CGRectMake(0, 0, self.view.HEIGHT, self.view.WIDTH-44);
-        NSLog(@"PORTLAIT");
-        webView.frame = portrait;
-    //横向きで起動した時
-    }else {
-        //iOS8以上の場合
-        if ([device.systemVersion floatValue] >= 8.0) {
-            portrait = CGRectMake(0, 0, self.view.HEIGHT, self.view.WIDTH-44);
-            landscape = CGRectMake(0, 0, self.view.WIDTH, self.view.HEIGHT-44);
-            //iOS7の場合
-        }else {
-            portrait = CGRectMake(0, 0, self.view.WIDTH, self.view.HEIGHT-44);
-            landscape = CGRectMake(0, 0, self.view.HEIGHT, self.view.WIDTH-44);
-        }
-        NSLog(@"LANDSCAPE");
-        webView.frame = landscape;
-        
-    }
+
 
     //ローカルに等倍フォントを使用
     [UIFont fontWithName:@"IPAGothic" size:14];
     //表示するURLを取得
-//    [self getUrl];
     url = _urlList[_buttonTag];
-//    NSLog(@"url = %@",url);
-//    url = @"http://oktss.xsrv.jp/shinozaki/index.php";
-//    NSString *deviceName = [[UIDevice currentDevice] name];
-//    NSString *iPadName = [deviceName uppercaseString];
+
 
     //初期URLのページを要求・表示
     [self makeRequest];
@@ -82,52 +55,6 @@
 */
 }
 
-- (void)viewDidLayoutSubviews
-{
-    if(device.orientation == UIDeviceOrientationPortrait)
-    {
-        webView.frame = portrait;
-    }else {
-        webView.frame = landscape;
-    }
-}
-/*
-- (void)getUrl {
-    //iPadの名前を取得
-    NSString *iPadName = [[UIDevice currentDevice] name];
-    
-    //IDFAの取得 UDIDに変わるiOSが発行するID
-    ASIdentifierManager *im = [ASIdentifierManager sharedManager];
-    NSString *idfa = @"";
-    if (im.advertisingTrackingEnabled) {
-        idfa = im.advertisingIdentifier.UUIDString;
-    }
-    
-    NSCalendar *cal	= [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    //　　カレンダーから時、分、秒を取得する
-    unsigned int unitFlags = NSHourCalendarUnit |
-    NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    //　　ローカルの日時に変換する
-    NSDateComponents *components = [cal components:unitFlags
-                                          fromDate:[NSDate date]];
-    //　　ローカル時刻の「時」を格納
-    NSInteger hour = [components hour];
-    NSString *userData = [[iPadName stringByAppendingString:@"&MAID="]stringByAppendingString:idfa];
-    NSLog(@"userData = %@", userData);
-    url = _urlList[_buttonTag];
-    
-    if([url hasPrefix:@"http://maru8ibm"]){
-        if(hour >= 7 || hour <21) {
-            url = [url stringByAppendingString:userData];
-        }else {
-            //サービス時間外メッセージ awsサーバーへアクセス
-            url = [@"http://ec2-54-199-199-73.ap-northeast-1.compute.amazonaws.com/maru8.php?VSID=A03&CPID="  stringByAppendingString:userData];
-        }
-    }
-    
-    NSLog(@"%@", url);
-}
-*/
 
 //ページを要求・表示
 -(void)makeRequest {
@@ -189,18 +116,6 @@ didFailLoadWithError:(NSError*)error {
     // Dispose of any resources that can be recreated.
 }
 
-//画面の向きの設定
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return (UIInterfaceOrientationMaskPortrait
-            | UIInterfaceOrientationMaskLandscapeRight
-            | UIInterfaceOrientationMaskLandscapeLeft);
-}
 
 - (IBAction)backButton:(UIBarButtonItem *)sender {
     //前画面に戻る

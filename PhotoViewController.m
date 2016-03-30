@@ -9,8 +9,8 @@
 #import "PhotoViewController.h"
 
 @interface PhotoViewController ()
-- (IBAction)sendButton:(UIBarButtonItem *)sender;
-- (IBAction)cancelButton:(UIBarButtonItem *)sender;
+//- (IBAction)sendButton:(UIBarButtonItem *)sender;
+//- (IBAction)cancelButton:(UIBarButtonItem *)sender;
 - (IBAction)selectNo:(id)sender;
 @property (weak, nonatomic) IBOutlet UINavigationItem *naviTitle;
 @property UIActivityIndicatorView *indicator;
@@ -24,16 +24,29 @@
     NSString *keiyaku;
     UIAlertView *alert1;
     UIAlertView *alert2;
-    IBOutlet UIBarButtonItem *postButton;
     NSDictionary *jsonData;
 //    NSDictionary *infoDic4;
 //    NSArray *titleList;
+    UIBarButtonItem *postButtonItem;
+    UIBarButtonItem *cancelButtonItem;
+    UIBarButtonItem *keiyakuButtonItem;
 
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self.navigationController setToolbarHidden:NO];
+
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"キャンセル" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton)];
+    keiyakuButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"契約No.入力" style:UIBarButtonItemStylePlain target:self action:@selector(selectNo:)];
+    postButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"送信" style:UIBarButtonItemStylePlain target:self action:@selector(sendButton)];
+
+    
+    [self setToolbarItems:[NSArray arrayWithObjects:cancelButtonItem, flexSpace, keiyakuButtonItem, flexSpace,postButtonItem, nil] animated:YES];
+    
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     _myImageView.image = delegate.image;
     _infoDic = delegate.infoDic;
@@ -44,11 +57,11 @@
     _gyomuCD = [_infoDic objectForKey:@"BUTTON"];
     
     if (keiyaku == nil){
-        [postButton setEnabled:NO];
+        [postButtonItem setEnabled:NO];
         [_keiyakuLabel setHidden:YES];
 
     }else {
-            [postButton setEnabled:YES];
+            [postButtonItem setEnabled:YES];
         }
     
 }
@@ -82,7 +95,7 @@
 
 
 //契約No.を選択するアクションシートを表示
-- (IBAction)selectNo:(id)sender{
+- (void)selectNo:(id)sender{
     [self getJson];
     NSLog(@"%@",jsonData);
     keiyakuNo = [jsonData objectForKey:@"BUTTON"];
@@ -129,7 +142,7 @@
 - (void) buttonPushed:(NSInteger)buttonIndex {
             keiyaku = keiyakuNo[buttonIndex];
             NSLog(@"%@", keiyaku);
-            [postButton setEnabled:YES];
+            [postButtonItem setEnabled:YES];
             _keiyakuLabel.text = [NSString stringWithFormat:@"%@を送信します",keiyaku];
     [_keiyakuLabel setHidden:NO];
 }
@@ -140,7 +153,7 @@
     if(buttonIndex < keiyakuNo.count){
     keiyaku = keiyakuNo[buttonIndex];
     NSLog(@"%@", keiyaku);
-    [postButton setEnabled:YES];
+    [postButtonItem setEnabled:YES];
         _keiyakuLabel.text = [NSString stringWithFormat:@"%@を送信します",keiyaku];
         [_keiyakuLabel setHidden:NO];
 
@@ -159,23 +172,9 @@
     if (alertView.tag == 1){
         keiyaku = keiyakuNo[buttonIndex];
         NSLog(@"%@", keiyaku);
-        [postButton setEnabled:YES];
+        [postButtonItem setEnabled:YES];
     }
 }
-
-//画面の向きの設定
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return (UIInterfaceOrientationMaskPortrait
-            | UIInterfaceOrientationMaskLandscapeRight
-            | UIInterfaceOrientationMaskLandscapeLeft);
-}
-
 
 
 //サーバーへ画像を送信
@@ -291,7 +290,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     //前画面に戻る
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 
     }
 }
@@ -299,7 +298,7 @@
 
 
 //送信ボタンが押された時の処理
-- (IBAction)sendButton:(UIBarButtonItem *)sender {
+- (void)sendButton {
     if(keiyaku == nil){
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"契約Noが選択されていません" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
@@ -308,9 +307,9 @@
 }
 
 //キャンセルボタンが押された時の処理
-- (IBAction)cancelButton:(UIBarButtonItem *)sender {
+- (void)cancelButton {
     // 前の画面に戻る
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 
 }
 

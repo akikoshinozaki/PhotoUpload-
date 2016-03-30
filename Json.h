@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import <AdSupport/AdSupport.h>
 #import "AppDelegate.h"
 
 @interface Json : NSObject

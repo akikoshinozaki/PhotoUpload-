@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "LUKeychainAccess.h"
 
 #define WIDTH bounds.size.width
 #define HEIGHT bounds.size.height
