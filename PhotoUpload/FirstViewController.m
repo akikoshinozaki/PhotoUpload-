@@ -145,11 +145,12 @@
 //ボタンタップ時のアクション
 - (void)clickButton:(UIButton*)button {
     _buttonTag = (int)button.tag;
-    SecondViewController *view2 = [self.storyboard instantiateViewControllerWithIdentifier:@"view2"];
-    view2.buttonTag = _buttonTag;
-    view2.gyomuCD2 = _gyomuCD1;
-//    [self presentViewController:view2 animated:YES completion:nil];
-    [self.navigationController pushViewController:view2 animated:YES];
+    ThirdViewController *view3 = [self.storyboard instantiateViewControllerWithIdentifier:@"view3"];
+    view3.buttonTag = _buttonTag;
+    view3.gyomuCD3 = _gyomuCD1;
+    
+//    [self presentViewController:view3 animated:YES completion:nil];
+    [self.navigationController pushViewController:view3 animated:YES];
     
 }
 

@@ -6,12 +6,14 @@
 //  Copyright (c) 2015年 administrator. All rights reserved.
 //
 
+
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
 #import "FirstViewController.h"
 #import "Json.h"
 
-@interface PhotoViewController : UIViewController <UINavigationControllerDelegate,UIAlertViewDelegate, NSURLConnectionDataDelegate,NSURLSessionDataDelegate, NSURLSessionTaskDelegate,UIActionSheetDelegate>
+@interface PhotoViewController : UIViewController <UINavigationControllerDelegate,UIAlertViewDelegate, NSURLConnectionDataDelegate,NSURLSessionDataDelegate, NSURLSessionTaskDelegate,UIActionSheetDelegate, UITextFieldDelegate,AVCaptureMetadataOutputObjectsDelegate>
 
 //何番目のボタンが押されたかを判別する変数
 @property int buttonTag;

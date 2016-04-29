@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Json.h"
 #import "SecondViewController.h"
+#import "ThirdViewController.h"
 #import "PhotoViewController.h"
 
 @interface FirstViewController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate,NSURLConnectionDelegate>

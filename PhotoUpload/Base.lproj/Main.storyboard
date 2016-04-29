@@ -199,9 +199,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="keiyakuLabel" destination="PM9-ly-GZP" id="trn-Ct-ddP"/>
                         <outlet property="myImageView" destination="Eeq-GX-LM2" id="Aaa-KH-9e4"/>
                         <outlet property="naviTitle" destination="Xw7-EI-4lI" id="0n0-1h-QZO"/>
+                        <outlet property="tagNoLabel" destination="PM9-ly-GZP" id="2qq-pP-rWC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MKv-sr-ojT" userLabel="First Responder" sceneMemberID="firstResponder"/>

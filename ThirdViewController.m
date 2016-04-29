@@ -138,7 +138,7 @@
     NSLog(@"%@",_gyomuCD3[_buttonTag]);
     
     //業務コードがGXXXの時は、カメラを起動して画像をアップロード
-    if([_gyomuCD3[_buttonTag] hasPrefix:@"G"]){
+    if([_gyomuCD3[_buttonTag] hasPrefix:@"C"]){
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     delegate.buttonTag = (int)button.tag;
     delegate.infoDic = infoDic3;

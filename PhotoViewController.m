@@ -7,29 +7,30 @@
 //
 
 #import "PhotoViewController.h"
+#import <AudioToolBox/AudioToolBox.h>
 
 @interface PhotoViewController ()
 //- (IBAction)sendButton:(UIBarButtonItem *)sender;
 //- (IBAction)cancelButton:(UIBarButtonItem *)sender;
-- (IBAction)selectNo:(id)sender;
+//- (IBAction)selectNo:(id)sender;
 @property (weak, nonatomic) IBOutlet UINavigationItem *naviTitle;
 @property UIActivityIndicatorView *indicator;
-@property (weak, nonatomic) IBOutlet UILabel *keiyakuLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tagNoLabel;
+@property (weak, nonatomic) UITextField *textInAlert;
+@property (strong, nonatomic) AVCaptureSession* session;
 
 @end
 
 @implementation PhotoViewController
 {
-    NSArray *keiyakuNo;
-    NSString *keiyaku;
+    NSString *tagNo;
     UIAlertView *alert1;
     UIAlertView *alert2;
     NSDictionary *jsonData;
-//    NSDictionary *infoDic4;
-//    NSArray *titleList;
     UIBarButtonItem *postButtonItem;
     UIBarButtonItem *cancelButtonItem;
-    UIBarButtonItem *keiyakuButtonItem;
+    UIBarButtonItem *tagNoButtonItem;
+    AVCaptureVideoPreviewLayer *preview;
 
 }
 
@@ -41,11 +42,11 @@
 
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"キャンセル" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton)];
-    keiyakuButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"契約No.入力" style:UIBarButtonItemStylePlain target:self action:@selector(selectNo:)];
+    tagNoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"タッグNo.入力" style:UIBarButtonItemStylePlain target:self action:@selector(selectNo:)];
     postButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"送信" style:UIBarButtonItemStylePlain target:self action:@selector(sendButton)];
 
     
-    [self setToolbarItems:[NSArray arrayWithObjects:cancelButtonItem, flexSpace, keiyakuButtonItem, flexSpace,postButtonItem, nil] animated:YES];
+    [self setToolbarItems:[NSArray arrayWithObjects:cancelButtonItem, flexSpace, tagNoButtonItem, flexSpace,postButtonItem, nil] animated:YES];
     
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     _myImageView.image = delegate.image;
@@ -56,9 +57,9 @@
     _naviTitle.title = titleList[_buttonTag];
     _gyomuCD = [_infoDic objectForKey:@"BUTTON"];
     
-    if (keiyaku == nil){
+    if (tagNo == nil){
         [postButtonItem setEnabled:NO];
-        [_keiyakuLabel setHidden:YES];
+        [_tagNoLabel setHidden:YES];
 
     }else {
             [postButtonItem setEnabled:YES];
@@ -94,87 +95,146 @@
 
 
 
-//契約No.を選択するアクションシートを表示
+//タッグNo.を選択するアクションシートを表示
 - (void)selectNo:(id)sender{
-    [self getJson];
-    NSLog(@"%@",jsonData);
-    keiyakuNo = [jsonData objectForKey:@"BUTTON"];
-//    keiyakuNo = [[NSArray alloc] init];
-//    keiyakuNo = @[@"12345",@"67890",@"ABCDE",@"FGHIJ",@"F01234",@"ABC001"];
-    //keiyaku = [[NSString alloc] init];
-    
     UIDevice *device = [UIDevice currentDevice];
-    //iOS7とiOS8でアクションを分岐
     //(iOS8)
     if ([device.systemVersion floatValue] >= 8.0) {
         UIAlertController *alertController = [[UIAlertController alloc] init];
-    alertController = [UIAlertController alertControllerWithTitle:@"契約Noを選択してください"
+    alertController = [UIAlertController alertControllerWithTitle:@"タッグNoを入力してください"
                                                           message:nil
-                                                   preferredStyle:UIAlertControllerStyleActionSheet];
+                                                   preferredStyle:UIAlertControllerStyleAlert];
     // addAction
-    for(int i=0; i<keiyakuNo.count;i++){
-    [alertController addAction:[UIAlertAction actionWithTitle:keiyakuNo[i] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        //ボタンが押された時の処理
-        [self buttonPushed:i];
-    }]];
-    }
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction *action){
+                                                                  [self buttonPushed:tagNo];
+                                                              }];
+        [alertController addAction:defaultAction];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"キャンセル"
+                                                              style:UIAlertActionStyleCancel
+                                                            handler:^(UIAlertAction *action){
+                                                                [alertController dismissViewControllerAnimated:YES
+                                                                                              completion:nil];
+                                                            }];
+        [alertController addAction:cancelAction];
+
+        UIAlertAction *altAction = [UIAlertAction actionWithTitle:@"バーコードスキャン"
+                                                            style:UIAlertActionStyleDestructive
+                                                          handler:^(UIAlertAction *action){
+                                                              [self barcodeReader];
+                                                              [alertController dismissViewControllerAnimated:YES
+                                                                                                  completion:nil];
+                                                          }];
+        [alertController addAction:altAction];
+
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            _textInAlert = textField;
+            _textInAlert.placeholder = @"タッグNo.入力";
+            _textInAlert.delegate = self;
+        }];
     
     alertController.popoverPresentationController.barButtonItem = sender;
     
     [self presentViewController:alertController animated:YES completion:nil];
-    //(iOS7)
-    }else{
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
-        actionSheet.delegate = self;
-        actionSheet.title = @"契約Noを選択してください";
-        for(int i=0; i<keiyakuNo.count;i++){
-            [actionSheet addButtonWithTitle:keiyakuNo[i]];
-        }
-        [actionSheet addButtonWithTitle:@"Cancel"];
-        actionSheet.cancelButtonIndex = (int)keiyakuNo.count;
-        [actionSheet showInView:self.view];
- 
     }
 
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    tagNo = _textInAlert.text;
+    
+}
+
+
+
+- (void)barcodeReader {
+/*    UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+    aView.center = CGPointMake(self.view.WIDTH/2, self.view.HEIGHT/2);
+    [self.view addSubview:aView];
+    
+    // Device
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    // session
+    self.session = [[AVCaptureSession alloc] init];
+    
+    // Input
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
+    if (input) {
+        [self.session addInput:input];
+    } else {
+        NSLog(@"error");
+    }
+    
+    // Output
+    AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
+    [self.session addOutput:output];
+    [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+    [output setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code]];
+    
+    
+    // Preview
+    preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
+    preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
+//    preview.frame = CGRectMake(200, 300, 300, 300);
+    preview.frame = CGRectMake(0, 0,300,300);
+    [aView.layer insertSublayer:preview atIndex:2];
+    
+    // Start
+    [self.session startRunning];
+    */
+}
+
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects
+       fromConnection:(AVCaptureConnection *)connection
+{
+    SystemSoundID soundID;
+    NSURL* soundURL = [[NSBundle mainBundle] URLForResource:@"Purr"
+                                              withExtension:@"aiff"];
+    AudioServicesCreateSystemSoundID ((__bridge CFURLRef)soundURL, &soundID);
+    AudioServicesPlaySystemSound (soundID);
+    
+    // 複数のmetadataが来るので順に調べる
+    for (AVMetadataObject *data in metadataObjects) {
+        if (![data isKindOfClass:[AVMetadataMachineReadableCodeObject class]]) continue;
+        // QR code data
+        NSString *strValue = [(AVMetadataMachineReadableCodeObject *)data stringValue];
+        // type ?
+        /*
+        if ([data.type isEqualToString:AVMetadataObjectTypeQRCode]) {
+            // QRコードの場合
+            NSURL *url = [NSURL URLWithString:strValue];
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }*/
+        if ([data.type isEqualToString:AVMetadataObjectTypeEAN13Code] | [data.type isEqualToString:AVMetadataObjectTypeEAN8Code]) {
+            // JANコードの場合
+            NSLog(@"str = %@",strValue);
+            tagNo = strValue;
+            [self.session stopRunning];
+            [postButtonItem setEnabled:YES];
+            _tagNoLabel.text = [NSString stringWithFormat:@"%@を送信します",tagNo];
+            [_tagNoLabel setHidden:NO];
+
+            [self.view.layer insertSublayer:preview atIndex:0];
+            
+        }
+    }
 }
 
 //(iOS8)UIAlertControllerで項目を選択した後のアクション
-- (void) buttonPushed:(NSInteger)buttonIndex {
-            keiyaku = keiyakuNo[buttonIndex];
-            NSLog(@"%@", keiyaku);
+- (void) buttonPushed:(NSString*)selectTagNo {
+    if(selectTagNo != nil){
+//    NSLog(@"tagNo = %@",tagNo);
             [postButtonItem setEnabled:YES];
-            _keiyakuLabel.text = [NSString stringWithFormat:@"%@を送信します",keiyaku];
-    [_keiyakuLabel setHidden:NO];
-}
-
-
-//(iOS7)アクションシートが選択された後の処理
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex < keiyakuNo.count){
-    keiyaku = keiyakuNo[buttonIndex];
-    NSLog(@"%@", keiyaku);
-    [postButtonItem setEnabled:YES];
-        _keiyakuLabel.text = [NSString stringWithFormat:@"%@を送信します",keiyaku];
-        [_keiyakuLabel setHidden:NO];
-
+            _tagNoLabel.text = [NSString stringWithFormat:@"%@を送信します",selectTagNo];
+            [_tagNoLabel setHidden:NO];
     }
 }
-/*
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet {
-    // cancelボタンが押された時の処理
-    NSLog(@"キャンセルボタン");
-    [postButton setEnabled:NO];
-}
-*/
-//(iOS7)アラートが選択された後の処理
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == 1){
-        keiyaku = keiyakuNo[buttonIndex];
-        NSLog(@"%@", keiyaku);
-        [postButtonItem setEnabled:YES];
-    }
-}
+
 
 
 //サーバーへ画像を送信
@@ -205,7 +265,8 @@
     
     //---ここからPOSTDATAの作成---
     //http://kyuuuuuuuuuuri.hatenablog.com/entry/20130414/1365910741
-    NSString *urlString = @"http://oktss03.xsrv.jp/shinozaki/file_upload.php";
+//    NSString *urlString = @"http://oktss03.xsrv.jp/shinozaki/file_upload.php";
+    NSString *urlString = @"http://oktss03.xsrv.jp/shinozaki/tagNo.php";
     NSString *boundary = @"---------------------------168072824752491622650073";
     //リクエストのオブジェクトを作成
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
@@ -218,10 +279,11 @@
     [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
     NSString *deviceName = [[UIDevice currentDevice] name];
     NSString *iPadName = [deviceName uppercaseString];
-    NSString *formatter1 = [dateFormatter stringFromDate:[NSDate date]];
+//    NSString *formatter1 = [dateFormatter stringFromDate:[NSDate date]];
     
     NSString *uploadFileName;
-    uploadFileName= [NSString stringWithFormat:@"%@%@%@%@",iPadName,_gyomuCD[_buttonTag],keiyaku, formatter1];
+//    uploadFileName= [NSString stringWithFormat:@"%@%@%@%@",iPadName,_gyomuCD[_buttonTag],tagNo, formatter1];
+    uploadFileName= [NSString stringWithFormat:@"%@",tagNo];
     NSLog(@"filename= %@",uploadFileName);
     
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
@@ -232,7 +294,7 @@
     [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data;"] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"name=\"%@\"\r\n\r\n", @"iPadName"] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"%@\r\n", iPadName] dataUsingEncoding:NSUTF8StringEncoding]];
-    
+
     //画像部分の設定
     [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data;"] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -299,8 +361,8 @@
 
 //送信ボタンが押された時の処理
 - (void)sendButton {
-    if(keiyaku == nil){
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"契約Noが選択されていません" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    if(tagNo == nil){
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"タッグNoが選択されていません" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
     }
     [self postData];

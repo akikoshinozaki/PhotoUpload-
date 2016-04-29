@@ -12,9 +12,11 @@
 		C355A46C1CAB68B400D21EB1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C355A4641CAB68B400D21EB1 /* Info.plist */; };
 		C355A46D1CAB68B400D21EB1 /* LUKeychainAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = C355A4671CAB68B400D21EB1 /* LUKeychainAccess.m */; };
 		C355A46E1CAB68B400D21EB1 /* LUKeychainServices.m in Sources */ = {isa = PBXBuildFile; fileRef = C355A46B1CAB68B400D21EB1 /* LUKeychainServices.m */; };
+		C355A4981CAB70ED00D21EB1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C355A4971CAB70ED00D21EB1 /* Security.framework */; };
 		C3766C5E1B43C4D800E846CB /* Json.m in Sources */ = {isa = PBXBuildFile; fileRef = C3766C5D1B43C4D800E846CB /* Json.m */; };
 		C3766C611B43CFBE00E846CB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3766C601B43CFBE00E846CB /* SecondViewController.m */; };
 		C3766C641B43CFD800E846CB /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3766C631B43CFD800E846CB /* ThirdViewController.m */; };
+		C37906B81CD0A8E900AA4A20 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37906B71CD0A8E900AA4A20 /* AudioToolbox.framework */; };
 		C3C6C0BD1C6DC1E100AB852B /* upload167.png in Resources */ = {isa = PBXBuildFile; fileRef = C3C6C0BC1C6DC1E100AB852B /* upload167.png */; };
 		C3D992A11B392630005D013F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992A01B392630005D013F /* main.m */; };
 		C3D992A41B392630005D013F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992A31B392630005D013F /* AppDelegate.m */; };
@@ -55,12 +57,14 @@
 		C355A46A1CAB68B400D21EB1 /* LUKeychainServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUKeychainServices.h; sourceTree = "<group>"; };
 		C355A46B1CAB68B400D21EB1 /* LUKeychainServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LUKeychainServices.m; sourceTree = "<group>"; };
 		C355A46F1CAB691D00D21EB1 /* PhotoUpload.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PhotoUpload.entitlements; sourceTree = "<group>"; };
+		C355A4971CAB70ED00D21EB1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C3766C5C1B43C4D800E846CB /* Json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Json.h; path = ../Json.h; sourceTree = "<group>"; };
 		C3766C5D1B43C4D800E846CB /* Json.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Json.m; path = ../Json.m; sourceTree = "<group>"; };
 		C3766C5F1B43CFBE00E846CB /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondViewController.h; path = ../SecondViewController.h; sourceTree = "<group>"; };
 		C3766C601B43CFBE00E846CB /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondViewController.m; path = ../SecondViewController.m; sourceTree = "<group>"; };
 		C3766C621B43CFD800E846CB /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThirdViewController.h; path = ../ThirdViewController.h; sourceTree = "<group>"; };
 		C3766C631B43CFD800E846CB /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThirdViewController.m; path = ../ThirdViewController.m; sourceTree = "<group>"; };
+		C37906B71CD0A8E900AA4A20 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C3C6C0BC1C6DC1E100AB852B /* upload167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload167.png; sourceTree = "<group>"; };
 		C3D9929B1B392630005D013F /* PhotoUpload.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoUpload.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D9929F1B392630005D013F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -91,6 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C37906B81CD0A8E900AA4A20 /* AudioToolbox.framework in Frameworks */,
+				C355A4981CAB70ED00D21EB1 /* Security.framework in Frameworks */,
 				C3D992D11B392AC2005D013F /* CoreGraphics.framework in Frameworks */,
 				C3D992CF1B392AB8005D013F /* Foundation.framework in Frameworks */,
 				C3D992CD1B392AA9005D013F /* UIKit.framework in Frameworks */,
@@ -201,6 +207,8 @@
 		C3D992D21B392ACB005D013F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C37906B71CD0A8E900AA4A20 /* AudioToolbox.framework */,
+				C355A4971CAB70ED00D21EB1 /* Security.framework */,
 				C355A4631CAB68B400D21EB1 /* LUKeychainAccess */,
 				C3D992D01B392AC2005D013F /* CoreGraphics.framework */,
 				C3D992CE1B392AB8005D013F /* Foundation.framework */,
@@ -452,7 +460,8 @@
 				CODE_SIGN_ENTITLEMENTS = PhotoUpload/PhotoUpload.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PhotoUpload/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.oktss.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -466,7 +475,8 @@
 				CODE_SIGN_ENTITLEMENTS = PhotoUpload/PhotoUpload.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				INFOPLIST_FILE = PhotoUpload/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.oktss.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
