@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="EVw-k1-hho">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="EVw-k1-hho">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -184,6 +184,32 @@
                                 <color key="textColor" red="1" green="0.92017457199999997" blue="0.13010712229999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvt-WY-74Z">
+                                <rect key="frame" x="209" y="368" width="350" height="288"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uae-vC-ZBN">
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="44"/>
+                                        <items>
+                                            <navigationItem title="バーコードを読み取って下さい" id="wvX-oh-MMc"/>
+                                        </items>
+                                    </navigationBar>
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UVt-B4-n8n">
+                                        <rect key="frame" x="0.0" y="244" width="350" height="44"/>
+                                        <items>
+                                            <barButtonItem title="キャンセル" id="oE9-9C-ApN">
+                                                <connections>
+                                                    <action selector="barcodeCancel:" destination="Deu-W1-yF6" id="r6g-GU-K0z"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </items>
+                                    </toolbar>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="350" id="P24-fD-tBm"/>
+                                    <constraint firstAttribute="height" constant="288" id="Vts-6O-xdx"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -193,12 +219,16 @@
                             <constraint firstItem="Eeq-GX-LM2" firstAttribute="leading" secondItem="XAS-8J-NhA" secondAttribute="leadingMargin" constant="-20" id="L5M-HE-R6Q"/>
                             <constraint firstItem="Eeq-GX-LM2" firstAttribute="top" secondItem="3kG-4d-Tcn" secondAttribute="bottom" symbolic="YES" id="MG8-0G-vIA"/>
                             <constraint firstItem="3kG-4d-Tcn" firstAttribute="top" secondItem="XAS-8J-NhA" secondAttribute="top" id="OeL-3p-vDp"/>
+                            <constraint firstItem="vvt-WY-74Z" firstAttribute="centerX" secondItem="XAS-8J-NhA" secondAttribute="centerX" id="gQG-ig-8xF"/>
                             <constraint firstItem="3kG-4d-Tcn" firstAttribute="leading" secondItem="Eeq-GX-LM2" secondAttribute="leading" id="h0a-Nr-bBP"/>
+                            <constraint firstItem="vvt-WY-74Z" firstAttribute="centerY" secondItem="XAS-8J-NhA" secondAttribute="centerY" id="mBQ-Gi-6Qc"/>
                             <constraint firstItem="3kG-4d-Tcn" firstAttribute="trailing" secondItem="Eeq-GX-LM2" secondAttribute="trailing" id="xQQ-CI-v9D"/>
                             <constraint firstAttribute="bottomMargin" secondItem="Eeq-GX-LM2" secondAttribute="bottom" id="yLA-Sj-LPr"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aView" destination="vvt-WY-74Z" id="Xty-yr-A9z"/>
+                        <outlet property="barcodeCancel" destination="oE9-9C-ApN" id="P9Y-10-fad"/>
                         <outlet property="myImageView" destination="Eeq-GX-LM2" id="Aaa-KH-9e4"/>
                         <outlet property="naviTitle" destination="Xw7-EI-4lI" id="0n0-1h-QZO"/>
                         <outlet property="tagNoLabel" destination="PM9-ly-GZP" id="2qq-pP-rWC"/>

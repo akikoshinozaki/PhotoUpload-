@@ -10,27 +10,27 @@
 #import <AudioToolBox/AudioToolBox.h>
 
 @interface PhotoViewController ()
-//- (IBAction)sendButton:(UIBarButtonItem *)sender;
-//- (IBAction)cancelButton:(UIBarButtonItem *)sender;
-//- (IBAction)selectNo:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *naviTitle;
 @property UIActivityIndicatorView *indicator;
 @property (weak, nonatomic) IBOutlet UILabel *tagNoLabel;
 @property (weak, nonatomic) UITextField *textInAlert;
 @property (strong, nonatomic) AVCaptureSession* session;
+- (IBAction)barcodeCancel:(UIBarButtonItem *)sender;
 
 @end
 
 @implementation PhotoViewController
 {
     NSString *tagNo;
-    UIAlertView *alert1;
     UIAlertView *alert2;
     NSDictionary *jsonData;
     UIBarButtonItem *postButtonItem;
     UIBarButtonItem *cancelButtonItem;
     UIBarButtonItem *tagNoButtonItem;
     AVCaptureVideoPreviewLayer *preview;
+    IBOutlet UIView *aView;
+    IBOutlet UIBarButtonItem *barcodeCancel;
 
 }
 
@@ -39,6 +39,7 @@
     // Do any additional setup after loading the view.
     
     [self.navigationController setToolbarHidden:NO];
+    [aView setHidden:YES];
 
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"キャンセル" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton)];
@@ -52,10 +53,11 @@
     _myImageView.image = delegate.image;
     _infoDic = delegate.infoDic;
     _buttonTag = delegate.buttonTag;
-    NSArray *titleList = [_infoDic objectForKey:@"TITLE"];
-    NSLog(@"%@",[_infoDic objectForKey:@"TITLE"]);
-    _naviTitle.title = titleList[_buttonTag];
-    _gyomuCD = [_infoDic objectForKey:@"BUTTON"];
+//    NSArray *titleList = [_infoDic objectForKey:@"TITLE"];
+//    NSLog(@"%@",[_infoDic objectForKey:@"TITLE"]);
+//    _naviTitle.title = titleList[_buttonTag];
+//    _gyomuCD = [_infoDic objectForKey:@"BUTTON"];
+    _naviTitle.title = @"サーバーへ画像を送信";
     
     if (tagNo == nil){
         [postButtonItem setEnabled:NO];
@@ -100,8 +102,7 @@
     UIDevice *device = [UIDevice currentDevice];
     //(iOS8)
     if ([device.systemVersion floatValue] >= 8.0) {
-        UIAlertController *alertController = [[UIAlertController alloc] init];
-    alertController = [UIAlertController alertControllerWithTitle:@"タッグNoを入力してください"
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"タッグNoを入力してください"
                                                           message:nil
                                                    preferredStyle:UIAlertControllerStyleAlert];
     // addAction
@@ -127,7 +128,6 @@
                                                                                                   completion:nil];
                                                           }];
         [alertController addAction:altAction];
-
         
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             _textInAlert = textField;
@@ -151,10 +151,8 @@
 
 
 - (void)barcodeReader {
-/*    UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
-    aView.center = CGPointMake(self.view.WIDTH/2, self.view.HEIGHT/2);
-    [self.view addSubview:aView];
-    
+    [aView setHidden:NO];
+
     // Device
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     // session
@@ -172,28 +170,33 @@
     AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
     [self.session addOutput:output];
     [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-    [output setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code]];
+    [output setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeCode128Code]];
     
     
     // Preview
     preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
-//    preview.frame = CGRectMake(200, 300, 300, 300);
-    preview.frame = CGRectMake(0, 0,300,300);
+    preview.frame = CGRectMake(0, 44,350,200);
     [aView.layer insertSublayer:preview atIndex:2];
     
     // Start
     [self.session startRunning];
-    */
+
 }
 
+-(IBAction)barcodeCancel:(UIBarButtonItem *)sender{
+    
+    [self.session stopRunning];
+//    aView = nil;
+    [aView setHidden:YES];
+}
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects
        fromConnection:(AVCaptureConnection *)connection
 {
     SystemSoundID soundID;
-    NSURL* soundURL = [[NSBundle mainBundle] URLForResource:@"Purr"
-                                              withExtension:@"aiff"];
+    NSURL* soundURL = [[NSBundle mainBundle] URLForResource:@"scan"
+                                              withExtension:@"mp3"];
     AudioServicesCreateSystemSoundID ((__bridge CFURLRef)soundURL, &soundID);
     AudioServicesPlaySystemSound (soundID);
     
@@ -210,7 +213,7 @@
             if ([[UIApplication sharedApplication] canOpenURL:url]) {
                 [[UIApplication sharedApplication] openURL:url];
             }*/
-        if ([data.type isEqualToString:AVMetadataObjectTypeEAN13Code] | [data.type isEqualToString:AVMetadataObjectTypeEAN8Code]) {
+        if ([data.type isEqualToString:AVMetadataObjectTypeEAN13Code] || [data.type isEqualToString:AVMetadataObjectTypeCode128Code]) {
             // JANコードの場合
             NSLog(@"str = %@",strValue);
             tagNo = strValue;
@@ -218,8 +221,7 @@
             [postButtonItem setEnabled:YES];
             _tagNoLabel.text = [NSString stringWithFormat:@"%@を送信します",tagNo];
             [_tagNoLabel setHidden:NO];
-
-            [self.view.layer insertSublayer:preview atIndex:0];
+            [aView setHidden:YES];
             
         }
     }
@@ -265,8 +267,8 @@
     
     //---ここからPOSTDATAの作成---
     //http://kyuuuuuuuuuuri.hatenablog.com/entry/20130414/1365910741
-//    NSString *urlString = @"http://oktss03.xsrv.jp/shinozaki/file_upload.php";
-    NSString *urlString = @"http://oktss03.xsrv.jp/shinozaki/tagNo.php";
+    //アップロード先のURL
+    NSString *urlString = @"http://oktss03.xsrv.jp/refresh.php";
     NSString *boundary = @"---------------------------168072824752491622650073";
     //リクエストのオブジェクトを作成
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
@@ -275,16 +277,10 @@
     NSMutableData *body = [NSMutableData data];
     
     // アップロードする際のファイル名
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *deviceName = [[UIDevice currentDevice] name];
-    NSString *iPadName = [deviceName uppercaseString];
-//    NSString *formatter1 = [dateFormatter stringFromDate:[NSDate date]];
-    
-    NSString *uploadFileName;
-//    uploadFileName= [NSString stringWithFormat:@"%@%@%@%@",iPadName,_gyomuCD[_buttonTag],tagNo, formatter1];
-    uploadFileName= [NSString stringWithFormat:@"%@",tagNo];
+    NSString *uploadFileName= [NSString stringWithFormat:@"%@",tagNo];
     NSLog(@"filename= %@",uploadFileName);
+    //フォルダ名（固定）
+    NSString *folderName = @"refresh";
     
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
     [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
@@ -292,8 +288,8 @@
     // テキスト部分の設定
     [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data;"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"name=\"%@\"\r\n\r\n", @"iPadName"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"%@\r\n", iPadName] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"name=\"%@\"\r\n\r\n", @"refresh"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"%@\r\n", folderName] dataUsingEncoding:NSUTF8StringEncoding]];
 
     //画像部分の設定
     [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -374,7 +370,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 
 }
-
 
 
 @end

@@ -8,10 +8,10 @@
 
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
 #import "FirstViewController.h"
 #import "Json.h"
+@import AVFoundation;
 
 @interface PhotoViewController : UIViewController <UINavigationControllerDelegate,UIAlertViewDelegate, NSURLConnectionDataDelegate,NSURLSessionDataDelegate, NSURLSessionTaskDelegate,UIActionSheetDelegate, UITextFieldDelegate,AVCaptureMetadataOutputObjectsDelegate>
 
