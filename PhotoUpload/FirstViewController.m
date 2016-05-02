@@ -33,15 +33,16 @@
     [self saveDefault];
     [self callDefault];
     
-    titleList = [infoDic1 objectForKey:@"TITLE"];
-    _gyomuCD1 = [infoDic1 objectForKey:@"BUTTON"];
+//    titleList = [infoDic1 objectForKey:@"TITLE"];
+//    _gyomuCD1 = [infoDic1 objectForKey:@"BUTTON"];
+    
+    titleList = @[@"カメラ起動", @"アルバムから選択"];
+    _gyomuCD1 = @[@"G001", @"C001"];
 
-//    self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
     for (int i=0; i<titleList.count; i++){
-        UIButton *myButton = [[UIButton alloc] init];
+        UIButton *myButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *img = [UIImage imageNamed:@"btn_green.png"];
-        myButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [myButton setBackgroundImage:img forState:UIControlStateNormal];
         [myButton setTitle:titleList[i] forState:UIControlStateNormal];
         [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -142,16 +143,62 @@
     }
 }
 
-//ボタンタップ時のアクション
+
+//ボタンを押した時の処理
 - (void)clickButton:(UIButton*)button {
-    _buttonTag = (int)button.tag;
-    ThirdViewController *view3 = [self.storyboard instantiateViewControllerWithIdentifier:@"view3"];
-    view3.buttonTag = _buttonTag;
-    view3.gyomuCD3 = _gyomuCD1;
+    //業務コードがGXXXの時は、カメラを起動して画像をアップロード
+    if([_gyomuCD1[_buttonTag] hasPrefix:@"G"]){
+        AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        delegate.buttonTag = (int)button.tag;
+        delegate.infoDic = infoDic1;
+        
+        // カメラが使用可能かどうか判定する
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            return;
+        }
+        
+        // UIImagePickerControllerのインスタンスを生成
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        
+        // デリゲートを設定
+        imagePicker.delegate = self;
+        
+        // 画像の取得先をカメラに設定
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        // 画像取得後に編集するかどうか（デフォルトはNO）
+        imagePicker.allowsEditing = NO;
+        
+        // 撮影画面をモーダルビューとして表示する
+        [self presentViewController:imagePicker animated:YES completion:nil];
+        
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *img = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     
-//    [self presentViewController:view3 animated:YES completion:nil];
-    [self.navigationController pushViewController:view3 animated:YES];
+    // 最初の画面に戻る
     
+    [self dismissViewControllerAnimated:NO completion:nil];
+    
+    PhotoViewController *photo = [self.storyboard instantiateViewControllerWithIdentifier:@"photo"];
+    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    delegate.image = img;
+    
+    [self.navigationController pushViewController:photo animated:YES];
+    
+}
+
+// キャンセルボタンのデリゲートメソッド
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    // 最初の画面に戻る
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // キャンセルされたときの処理を記述・・・
 }
 
 

@@ -16,11 +16,10 @@
     NSString *deviceName = [[UIDevice currentDevice] name];
     NSString *iPadName = [deviceName uppercaseString];
     
-    //端末識別子の取得
     // キーチェーンアクセスから識別子を取得
     LUKeychainAccess *keychainAccess = [LUKeychainAccess standardKeychainAccess];
     NSString *idfv = [keychainAccess stringForKey:@"idfv"];
-    
+    /*
     if(idfv == nil){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"識別子エラー" message:@"丸八システムを先に起動してください" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
@@ -29,7 +28,7 @@
         idfv = @"";
     }
     NSLog(@"idfv = %@",idfv);
-
+*/
 
     //日付・時刻を取得
     
