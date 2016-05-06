@@ -65,6 +65,22 @@
     
 }
 
+//20160507 回転を検知
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(didChangedOrientation) name:UIDeviceOrientationDidChangeNotification object:nil];
+}
+
+//20160507 回転を検知
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -172,24 +188,19 @@
     preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
     preview.frame = CGRectMake(0, 44,350,200);
-    //デバイスの向きが横向きだったら、VideoPreviewの向きも回転
-    UIDevice *device2 = [UIDevice currentDevice];
-    if(UIDeviceOrientationIsLandscape(device2.orientation)){
     
-    [[preview connection]setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
-    }
+    [self didChangedOrientation];//20160507 回転向き調整
+    
     [aView.layer insertSublayer:preview atIndex:0];
-    
+
     // Start
     [self.session startRunning];
 
 }
 
 -(IBAction)barcodeCancel:(UIBarButtonItem *)sender{
-    
     [self.session stopRunning];
-    //VideoPreviewLayer初期化
-    preview = [[AVCaptureVideoPreviewLayer alloc] init];
+    [preview removeFromSuperlayer];//20160507 レイヤから外す
 //    aView = nil;
     [aView setHidden:YES];
 }
@@ -215,6 +226,7 @@
             tagNo =[strValue substringWithRange:NSMakeRange(4,8)];
             NSLog(@"tagNo = %@",tagNo);
             [self.session stopRunning];
+            [preview removeFromSuperlayer];//20160507 レイヤから外す
             [postButtonItem setEnabled:YES];
             _tagNoLabel.text = [NSString stringWithFormat:@"%@を送信します",tagNo];
             [_tagNoLabel setHidden:NO];
@@ -368,5 +380,39 @@
 
 }
 
+//20160507 回転を検知
+- (void)didChangedOrientation
+{
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    switch (orientation) {
+            
+        case UIDeviceOrientationPortrait:
+            [preview connection].videoOrientation = AVCaptureVideoOrientationPortrait;
+            break;
+            
+        case UIDeviceOrientationPortraitUpsideDown:
+            break;
+            
+        case UIDeviceOrientationLandscapeLeft:
+            [preview connection].videoOrientation = AVCaptureVideoOrientationLandscapeRight;//20160507 逆になる
+            break;
+            
+        case UIDeviceOrientationLandscapeRight:
+            [preview connection].videoOrientation = AVCaptureVideoOrientationLandscapeLeft;//20160507 逆になる
+            break;
+            
+        case UIDeviceOrientationFaceUp:
+            break;
+            
+        case UIDeviceOrientationFaceDown:
+            break;
+            
+        case UIDeviceOrientationUnknown:
+            break;
+            
+        default:
+            break;
+    }
+}
 
 @end
