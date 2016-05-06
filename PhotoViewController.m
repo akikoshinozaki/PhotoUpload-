@@ -24,7 +24,7 @@
 {
     NSString *tagNo;
     UIAlertView *alert2;
-    NSDictionary *jsonData;
+//    NSDictionary *jsonData;
     UIBarButtonItem *postButtonItem;
     UIBarButtonItem *cancelButtonItem;
     UIBarButtonItem *tagNoButtonItem;
@@ -53,10 +53,6 @@
     _myImageView.image = delegate.image;
     _infoDic = delegate.infoDic;
     _buttonTag = delegate.buttonTag;
-//    NSArray *titleList = [_infoDic objectForKey:@"TITLE"];
-//    NSLog(@"%@",[_infoDic objectForKey:@"TITLE"]);
-//    _naviTitle.title = titleList[_buttonTag];
-//    _gyomuCD = [_infoDic objectForKey:@"BUTTON"];
     _naviTitle.title = @"サーバーへ画像を送信";
     
     if (tagNo == nil){
@@ -74,7 +70,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-//2015.08.21　契約No.のリストを取得する
+/*
 //契約Noのリストを取得する
 -(void)getJson{
     jsonData = [[NSDictionary alloc] init];
@@ -94,7 +90,7 @@
     }
 }
 
-
+*/
 
 
 //タッグNo.を選択するアクションシートを表示
@@ -172,12 +168,17 @@
     [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
     [output setMetadataObjectTypes:@[AVMetadataObjectTypeEAN13Code]];
     
-    
     // Preview
     preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
     preview.frame = CGRectMake(0, 44,350,200);
-    [aView.layer insertSublayer:preview atIndex:2];
+    //デバイスの向きが横向きだったら、VideoPreviewの向きも回転
+    UIDevice *device2 = [UIDevice currentDevice];
+    if(UIDeviceOrientationIsLandscape(device2.orientation)){
+    
+    [[preview connection]setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
+    }
+    [aView.layer insertSublayer:preview atIndex:0];
     
     // Start
     [self.session startRunning];
@@ -187,6 +188,8 @@
 -(IBAction)barcodeCancel:(UIBarButtonItem *)sender{
     
     [self.session stopRunning];
+    //VideoPreviewLayer初期化
+    preview = [[AVCaptureVideoPreviewLayer alloc] init];
 //    aView = nil;
     [aView setHidden:YES];
 }
@@ -206,6 +209,7 @@
         // barcode data
         NSString *strValue = [(AVMetadataMachineReadableCodeObject *)data stringValue];
         // type ?
+
         if ([data.type isEqualToString:AVMetadataObjectTypeEAN13Code]) {
             // JANコードの場合
             tagNo =[strValue substringWithRange:NSMakeRange(4,8)];

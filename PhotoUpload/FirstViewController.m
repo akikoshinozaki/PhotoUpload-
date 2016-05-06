@@ -7,10 +7,10 @@
 //
 
 #import "FirstViewController.h"
-#import <AdSupport/AdSupport.h>
+#import "myImagePickerController.h"
 
 @interface FirstViewController ()
-
+- (NSUInteger)supportedInterfaceOrientations;
 @end
 
 @implementation FirstViewController
@@ -51,6 +51,7 @@
         myButton.translatesAutoresizingMaskIntoConstraints = NO;
         
         [self.view addSubview:myButton];
+
         [myButton addTarget:self
                      action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -104,9 +105,6 @@
     
     //アプリのバージョンを表示
     [versionLabel setText:[NSString stringWithFormat: @"Ver. %@", version]];
-    //会社名を表示
-    NSString *kaisha = [infoDic1 objectForKey:@"userName"];
-    [userName setText:kaisha];
 
 }
 
@@ -146,6 +144,17 @@
 
 //ボタンを押した時の処理
 - (void)clickButton:(UIButton*)button {
+    _buttonTag = (int)button.tag;
+    
+    // UIImagePickerControllerのインスタンスを生成
+    myImagePickerController *imagePicker = [[myImagePickerController alloc] init];
+    
+    // デリゲートを設定
+    imagePicker.delegate = self;
+    
+    // 画像取得後に編集するかどうか（デフォルトはNO）
+    imagePicker.allowsEditing = NO;
+
     //業務コードがGXXXの時は、カメラを起動して画像をアップロード
     if([_gyomuCD1[_buttonTag] hasPrefix:@"G"]){
         AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
@@ -153,29 +162,33 @@
         delegate.infoDic = infoDic1;
         
         // カメラが使用可能かどうか判定する
-        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        if (![myImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             return;
         }
-        
-        // UIImagePickerControllerのインスタンスを生成
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-        
-        // デリゲートを設定
-        imagePicker.delegate = self;
         
         // 画像の取得先をカメラに設定
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
-        // 画像取得後に編集するかどうか（デフォルトはNO）
-        imagePicker.allowsEditing = NO;
+    }else {
+        // カメラが使用可能かどうか判定する
+        if (![myImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            return;
+        }
         
-        // 撮影画面をモーダルビューとして表示する
-        [self presentViewController:imagePicker animated:YES completion:nil];
+        // 画像の取得先をカメラに設定
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
+
     }
+    // 画像取得後に編集するかどうか（デフォルトはNO）
+    imagePicker.allowsEditing = NO;
+    
+    // 撮影画面をモーダルビューとして表示する
+    [self presentViewController:imagePicker animated:YES completion:nil];
+
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker
+- (void)imagePickerController:(myImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *img = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
@@ -193,7 +206,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 }
 
 // キャンセルボタンのデリゲートメソッド
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+- (void)imagePickerControllerDidCancel:(myImagePickerController *)picker
 {
     // 最初の画面に戻る
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -201,5 +214,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     // キャンセルされたときの処理を記述・・・
 }
 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
 
 @end

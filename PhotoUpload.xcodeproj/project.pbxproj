@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C30E077B1B99529A00C22465 /* upload76.png in Resources */ = {isa = PBXBuildFile; fileRef = C30E07791B99529A00C22465 /* upload76.png */; };
 		C30E077C1B99529A00C22465 /* upload152.png in Resources */ = {isa = PBXBuildFile; fileRef = C30E077A1B99529A00C22465 /* upload152.png */; };
+		C34E8F4D1CDC78890078FF2F /* myImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = C34E8F4C1CDC78890078FF2F /* myImagePickerController.m */; };
 		C355A46C1CAB68B400D21EB1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C355A4641CAB68B400D21EB1 /* Info.plist */; };
 		C355A46D1CAB68B400D21EB1 /* LUKeychainAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = C355A4671CAB68B400D21EB1 /* LUKeychainAccess.m */; };
 		C355A46E1CAB68B400D21EB1 /* LUKeychainServices.m in Sources */ = {isa = PBXBuildFile; fileRef = C355A46B1CAB68B400D21EB1 /* LUKeychainServices.m */; };
@@ -47,6 +48,8 @@
 		C30E07791B99529A00C22465 /* upload76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload76.png; sourceTree = "<group>"; };
 		C30E077A1B99529A00C22465 /* upload152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload152.png; sourceTree = "<group>"; };
 		C31851991B68BC9B004BA645 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		C34E8F4B1CDC78890078FF2F /* myImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myImagePickerController.h; sourceTree = "<group>"; };
+		C34E8F4C1CDC78890078FF2F /* myImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myImagePickerController.m; sourceTree = "<group>"; };
 		C355A4641CAB68B400D21EB1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C355A4651CAB68B400D21EB1 /* LUKeychainAccess-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LUKeychainAccess-Prefix.pch"; sourceTree = "<group>"; };
 		C355A4661CAB68B400D21EB1 /* LUKeychainAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUKeychainAccess.h; sourceTree = "<group>"; };
@@ -161,6 +164,8 @@
 				C3D992A91B392630005D013F /* FirstViewController.m */,
 				C3D992C71B3928D6005D013F /* PhotoViewController.h */,
 				C3D992C81B3928D6005D013F /* PhotoViewController.m */,
+				C34E8F4B1CDC78890078FF2F /* myImagePickerController.h */,
+				C34E8F4C1CDC78890078FF2F /* myImagePickerController.m */,
 				C3D992AB1B392630005D013F /* Main.storyboard */,
 				C3D992AE1B392630005D013F /* Images.xcassets */,
 				C3D992A51B392630005D013F /* PhotoUpload.xcdatamodeld */,
@@ -326,6 +331,7 @@
 				C3D992C91B3928D6005D013F /* PhotoViewController.m in Sources */,
 				C3D992A41B392630005D013F /* AppDelegate.m in Sources */,
 				C3D992A11B392630005D013F /* main.m in Sources */,
+				C34E8F4D1CDC78890078FF2F /* myImagePickerController.m in Sources */,
 				C355A46D1CAB68B400D21EB1 /* LUKeychainAccess.m in Sources */,
 				C3D992AA1B392630005D013F /* FirstViewController.m in Sources */,
 				C3D992A71B392630005D013F /* PhotoUpload.xcdatamodeld in Sources */,

@@ -42,6 +42,10 @@
 	<key>UIStatusBarHidden~ipad</key>
 	<false/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array/>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 </dict>
 </plist>
