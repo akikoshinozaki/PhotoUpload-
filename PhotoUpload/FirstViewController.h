@@ -16,7 +16,5 @@
 @property(retain) NSDictionary *jsonData;
 @property(retain) NSArray *gyomuCD1;
 
-//- (IBAction)startCamera:(UIBarButtonItem *)sender;
-
 @end
 

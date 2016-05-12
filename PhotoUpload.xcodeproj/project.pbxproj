@@ -10,6 +10,7 @@
 		C30E077B1B99529A00C22465 /* upload76.png in Resources */ = {isa = PBXBuildFile; fileRef = C30E07791B99529A00C22465 /* upload76.png */; };
 		C30E077C1B99529A00C22465 /* upload152.png in Resources */ = {isa = PBXBuildFile; fileRef = C30E077A1B99529A00C22465 /* upload152.png */; };
 		C34E8F4D1CDC78890078FF2F /* myImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = C34E8F4C1CDC78890078FF2F /* myImagePickerController.m */; };
+		C34F4AB71CE2F0E900C39F47 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C34F4AB61CE2F0E900C39F47 /* NavigationController.m */; };
 		C355A46C1CAB68B400D21EB1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C355A4641CAB68B400D21EB1 /* Info.plist */; };
 		C355A46D1CAB68B400D21EB1 /* LUKeychainAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = C355A4671CAB68B400D21EB1 /* LUKeychainAccess.m */; };
 		C355A46E1CAB68B400D21EB1 /* LUKeychainServices.m in Sources */ = {isa = PBXBuildFile; fileRef = C355A46B1CAB68B400D21EB1 /* LUKeychainServices.m */; };
@@ -25,7 +26,6 @@
 		C3D992AA1B392630005D013F /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992A91B392630005D013F /* FirstViewController.m */; };
 		C3D992AD1B392630005D013F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3D992AB1B392630005D013F /* Main.storyboard */; };
 		C3D992AF1B392630005D013F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D992AE1B392630005D013F /* Images.xcassets */; };
-		C3D992BE1B392630005D013F /* PhotoUploadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992BD1B392630005D013F /* PhotoUploadTests.m */; };
 		C3D992C91B3928D6005D013F /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D992C81B3928D6005D013F /* PhotoViewController.m */; };
 		C3D992CD1B392AA9005D013F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D992CC1B392AA9005D013F /* UIKit.framework */; };
 		C3D992CF1B392AB8005D013F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D992CE1B392AB8005D013F /* Foundation.framework */; };
@@ -34,22 +34,14 @@
 		C3F1822A1B465C7900541182 /* btn_green.png in Resources */ = {isa = PBXBuildFile; fileRef = C3F182291B465C7900541182 /* btn_green.png */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C3D992B81B392630005D013F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C3D992931B392630005D013F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C3D9929A1B392630005D013F;
-			remoteInfo = PhotoUpload;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		C30E07791B99529A00C22465 /* upload76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload76.png; sourceTree = "<group>"; };
 		C30E077A1B99529A00C22465 /* upload152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload152.png; sourceTree = "<group>"; };
 		C31851991B68BC9B004BA645 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		C34E8F4B1CDC78890078FF2F /* myImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myImagePickerController.h; sourceTree = "<group>"; };
 		C34E8F4C1CDC78890078FF2F /* myImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myImagePickerController.m; sourceTree = "<group>"; };
+		C34F4AB51CE2F0E900C39F47 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
+		C34F4AB61CE2F0E900C39F47 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		C355A4641CAB68B400D21EB1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C355A4651CAB68B400D21EB1 /* LUKeychainAccess-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LUKeychainAccess-Prefix.pch"; sourceTree = "<group>"; };
 		C355A4661CAB68B400D21EB1 /* LUKeychainAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUKeychainAccess.h; sourceTree = "<group>"; };
@@ -76,7 +68,6 @@
 		C3D992A91B392630005D013F /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		C3D992AC1B392630005D013F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C3D992AE1B392630005D013F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C3D992B71B392630005D013F /* PhotoUploadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoUploadTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D992BC1B392630005D013F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3D992BD1B392630005D013F /* PhotoUploadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoUploadTests.m; sourceTree = "<group>"; };
 		C3D992C71B3928D6005D013F /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoViewController.h; path = ../PhotoViewController.h; sourceTree = "<group>"; };
@@ -99,13 +90,6 @@
 				C3D992D11B392AC2005D013F /* CoreGraphics.framework in Frameworks */,
 				C3D992CF1B392AB8005D013F /* Foundation.framework in Frameworks */,
 				C3D992CD1B392AA9005D013F /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C3D992B41B392630005D013F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				C3D9929B1B392630005D013F /* PhotoUpload.app */,
-				C3D992B71B392630005D013F /* PhotoUploadTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -156,6 +139,10 @@
 			isa = PBXGroup;
 			children = (
 				C355A46F1CAB691D00D21EB1 /* PhotoUpload.entitlements */,
+				C34F4AB51CE2F0E900C39F47 /* NavigationController.h */,
+				C34F4AB61CE2F0E900C39F47 /* NavigationController.m */,
+				C34E8F4B1CDC78890078FF2F /* myImagePickerController.h */,
+				C34E8F4C1CDC78890078FF2F /* myImagePickerController.m */,
 				C3766C5C1B43C4D800E846CB /* Json.h */,
 				C3766C5D1B43C4D800E846CB /* Json.m */,
 				C3D992A21B392630005D013F /* AppDelegate.h */,
@@ -164,8 +151,6 @@
 				C3D992A91B392630005D013F /* FirstViewController.m */,
 				C3D992C71B3928D6005D013F /* PhotoViewController.h */,
 				C3D992C81B3928D6005D013F /* PhotoViewController.m */,
-				C34E8F4B1CDC78890078FF2F /* myImagePickerController.h */,
-				C34E8F4C1CDC78890078FF2F /* myImagePickerController.m */,
 				C3D992AB1B392630005D013F /* Main.storyboard */,
 				C3D992AE1B392630005D013F /* Images.xcassets */,
 				C3D992A51B392630005D013F /* PhotoUpload.xcdatamodeld */,
@@ -235,24 +220,6 @@
 			productReference = C3D9929B1B392630005D013F /* PhotoUpload.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C3D992B61B392630005D013F /* PhotoUploadTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C3D992C41B392630005D013F /* Build configuration list for PBXNativeTarget "PhotoUploadTests" */;
-			buildPhases = (
-				C3D992B31B392630005D013F /* Sources */,
-				C3D992B41B392630005D013F /* Frameworks */,
-				C3D992B51B392630005D013F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C3D992B91B392630005D013F /* PBXTargetDependency */,
-			);
-			name = PhotoUploadTests;
-			productName = PhotoUploadTests;
-			productReference = C3D992B71B392630005D013F /* PhotoUploadTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -271,10 +238,6 @@
 							};
 						};
 					};
-					C3D992B61B392630005D013F = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = C3D9929A1B392630005D013F;
-					};
 				};
 			};
 			buildConfigurationList = C3D992961B392630005D013F /* Build configuration list for PBXProject "PhotoUpload" */;
@@ -291,7 +254,6 @@
 			projectRoot = "";
 			targets = (
 				C3D9929A1B392630005D013F /* PhotoUpload */,
-				C3D992B61B392630005D013F /* PhotoUploadTests */,
 			);
 		};
 /* End PBXProject section */
@@ -313,13 +275,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C3D992B51B392630005D013F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -334,28 +289,13 @@
 				C34E8F4D1CDC78890078FF2F /* myImagePickerController.m in Sources */,
 				C355A46D1CAB68B400D21EB1 /* LUKeychainAccess.m in Sources */,
 				C3D992AA1B392630005D013F /* FirstViewController.m in Sources */,
+				C34F4AB71CE2F0E900C39F47 /* NavigationController.m in Sources */,
 				C3D992A71B392630005D013F /* PhotoUpload.xcdatamodeld in Sources */,
 				C3766C5E1B43C4D800E846CB /* Json.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C3D992B31B392630005D013F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C3D992BE1B392630005D013F /* PhotoUploadTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C3D992B91B392630005D013F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C3D9929A1B392630005D013F /* PhotoUpload */;
-			targetProxy = C3D992B81B392630005D013F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C3D992AB1B392630005D013F /* Main.storyboard */ = {
@@ -479,42 +419,6 @@
 			};
 			name = Release;
 		};
-		C3D992C51B392630005D013F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = PhotoUploadTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.oktss.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoUpload.app/PhotoUpload";
-			};
-			name = Debug;
-		};
-		C3D992C61B392630005D013F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = PhotoUploadTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.oktss.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoUpload.app/PhotoUpload";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -532,15 +436,6 @@
 			buildConfigurations = (
 				C3D992C21B392630005D013F /* Debug */,
 				C3D992C31B392630005D013F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C3D992C41B392630005D013F /* Build configuration list for PBXNativeTarget "PhotoUploadTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C3D992C51B392630005D013F /* Debug */,
-				C3D992C61B392630005D013F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

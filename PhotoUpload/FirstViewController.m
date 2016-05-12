@@ -10,7 +10,7 @@
 #import "myImagePickerController.h"
 
 @interface FirstViewController ()
-- (NSUInteger)supportedInterfaceOrientations;
+
 @end
 
 @implementation FirstViewController
@@ -18,7 +18,7 @@
     //バージョンを表示するラベル
     IBOutlet UILabel *versionLabel;
     //会社名を表示するラベル
-    IBOutlet UILabel *userName;
+//    IBOutlet UILabel *userName;
     NSDictionary *infoDic1; //起動時に取得するTitle、URLの情報
     NSArray *titleList;
     //BOOL *loadSuccessful;
@@ -30,8 +30,8 @@
     [super viewDidLoad];
     
     [self.navigationController setToolbarHidden:YES];
-    [self saveDefault];
-    [self callDefault];
+//    [self saveDefault];
+//    [self callDefault];
     
 //    titleList = [infoDic1 objectForKey:@"TITLE"];
 //    _gyomuCD1 = [infoDic1 objectForKey:@"BUTTON"];
@@ -170,18 +170,14 @@
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
     }else {
-        // カメラが使用可能かどうか判定する
+        // フォトライブラリへアクセス可能か判定
         if (![myImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
             return;
         }
-        
-        // 画像の取得先をカメラに設定
+        // フォトライブラリをから画像を取得
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
-
     }
-    // 画像取得後に編集するかどうか（デフォルトはNO）
-    imagePicker.allowsEditing = NO;
     
     // 撮影画面をモーダルビューとして表示する
     [self presentViewController:imagePicker animated:YES completion:nil];
@@ -210,18 +206,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     // 最初の画面に戻る
     [self dismissViewControllerAnimated:YES completion:nil];
-    
-    // キャンセルされたときの処理を記述・・・
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 @end

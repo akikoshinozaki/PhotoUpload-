@@ -13,7 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *naviTitle;
 @property UIActivityIndicatorView *indicator;
-@property (weak, nonatomic) IBOutlet UILabel *tagNoLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *tagNoLabel;
 @property (weak, nonatomic) UITextField *textInAlert;
 @property (strong, nonatomic) AVCaptureSession* session;
 - (IBAction)barcodeCancel:(UIBarButtonItem *)sender;
@@ -25,12 +25,15 @@
     NSString *tagNo;
     UIAlertView *alert2;
 //    NSDictionary *jsonData;
-    UIBarButtonItem *postButtonItem;
+//    UIBarButtonItem *postButtonItem;
     UIBarButtonItem *cancelButtonItem;
     UIBarButtonItem *tagNoButtonItem;
     AVCaptureVideoPreviewLayer *preview;
     IBOutlet UIView *aView;
     IBOutlet UIBarButtonItem *barcodeCancel;
+    UIDevice *device;
+    NSDictionary *IBMData;
+    
 
 }
 
@@ -44,17 +47,16 @@
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"キャンセル" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton)];
     tagNoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"タッグNo.入力" style:UIBarButtonItemStylePlain target:self action:@selector(selectNo:)];
-    postButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"送信" style:UIBarButtonItemStylePlain target:self action:@selector(sendButton)];
-
+//    postButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"送信" style:UIBarButtonItemStylePlain target:self action:@selector(sendButton)];
     
-    [self setToolbarItems:[NSArray arrayWithObjects:cancelButtonItem, flexSpace, tagNoButtonItem, flexSpace,postButtonItem, nil] animated:YES];
+    [self setToolbarItems:[NSArray arrayWithObjects:cancelButtonItem, flexSpace, tagNoButtonItem, flexSpace, nil] animated:YES];
     
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     _myImageView.image = delegate.image;
     _infoDic = delegate.infoDic;
     _buttonTag = delegate.buttonTag;
     _naviTitle.title = @"サーバーへ画像を送信";
-    
+/*
     if (tagNo == nil){
         [postButtonItem setEnabled:NO];
         [_tagNoLabel setHidden:YES];
@@ -62,7 +64,7 @@
     }else {
             [postButtonItem setEnabled:YES];
         }
-    
+*/
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,32 +72,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-//契約Noのリストを取得する
--(void)getJson{
-    jsonData = [[NSDictionary alloc] init];
-    jsonData = [Json getJson:@"C130"];
-    //    NSLog(@"%@", _jsonData);
-    //jsonDataがnilの場合はアラートを表示
-    if(jsonData.count==0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"VPN 丸ハ接続" message:@"VPN 丸八接続 が「接続中」になっているか確認してください" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alert show];
-    }else{
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:jsonData forKey:@"jsonDataPhoto"];
-        BOOL successful = [defaults synchronize];
-        if (successful) {
-            NSLog(@"%@", @"データの保存に成功しました。");
-        }
-    }
-}
-
-*/
-
 
 //タッグNo.を選択するアクションシートを表示
 - (void)selectNo:(id)sender{
-    UIDevice *device = [UIDevice currentDevice];
+    device = [UIDevice currentDevice];
     //(iOS8)
     if ([device.systemVersion floatValue] >= 8.0) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"タッグNoを入力してください"
@@ -105,7 +85,7 @@
         UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
                                                                 style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction *action){
-                                                                  [self buttonPushed:tagNo];
+                                                                  [self inputTagNo:tagNo];
                                                               }];
         [alertController addAction:defaultAction];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"キャンセル"
@@ -129,6 +109,7 @@
             _textInAlert = textField;
             _textInAlert.placeholder = @"タッグNo.入力";
             _textInAlert.delegate = self;
+            _textInAlert.returnKeyType = UIKeyboardTypeNumberPad;
         }];
     
     alertController.popoverPresentationController.barButtonItem = sender;
@@ -141,21 +122,20 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     tagNo = _textInAlert.text;
-    
 }
 
 
-
+//バーコードリーダー起動
 - (void)barcodeReader {
     [aView setHidden:NO];
 
     // Device
-    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDevice *avDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     // session
     self.session = [[AVCaptureSession alloc] init];
     
     // Input
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:avDevice error:nil];
     if (input) {
         [self.session addInput:input];
     } else {
@@ -172,19 +152,21 @@
     preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
     preview.frame = CGRectMake(0, 44,350,200);
+/*
     //デバイスの向きが横向きだったら、VideoPreviewの向きも回転
-    UIDevice *device2 = [UIDevice currentDevice];
-    if(UIDeviceOrientationIsLandscape(device2.orientation)){
-    
+    device = [UIDevice currentDevice];
+    if(UIDeviceOrientationIsLandscape(device.orientation)){
+*/
     [[preview connection]setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
-    }
-    [aView.layer insertSublayer:preview atIndex:0];
+//    }
+    [aView.layer insertSublayer:preview atIndex:9];
     
     // Start
     [self.session startRunning];
 
 }
 
+//バーコードリーダーのキャンセルボタンが押された時の処理
 -(IBAction)barcodeCancel:(UIBarButtonItem *)sender{
     
     [self.session stopRunning];
@@ -194,16 +176,18 @@
     [aView setHidden:YES];
 }
 
+//バーコード読み取りが完了した時の処理
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects
        fromConnection:(AVCaptureConnection *)connection
 {
+    //サウンドを再生
     SystemSoundID soundID;
     NSURL* soundURL = [[NSBundle mainBundle] URLForResource:@"scan"
                                               withExtension:@"mp3"];
     AudioServicesCreateSystemSoundID ((__bridge CFURLRef)soundURL, &soundID);
     AudioServicesPlaySystemSound (soundID);
     
-    // 複数のmetadataが来るので順に調べる
+    // 複数のmetadataが来るので順に調べる（ここではJANコードに限定）
     for (AVMetadataObject *data in metadataObjects) {
         if (![data isKindOfClass:[AVMetadataMachineReadableCodeObject class]]) continue;
         // barcode data
@@ -211,26 +195,47 @@
         // type ?
 
         if ([data.type isEqualToString:AVMetadataObjectTypeEAN13Code]) {
-            // JANコードの場合
+            // 最初の4桁と最後のチェックデジットを削除して8桁のtagNoを抽出
             tagNo =[strValue substringWithRange:NSMakeRange(4,8)];
             NSLog(@"tagNo = %@",tagNo);
             [self.session stopRunning];
-            [postButtonItem setEnabled:YES];
-            _tagNoLabel.text = [NSString stringWithFormat:@"%@を送信します",tagNo];
-            [_tagNoLabel setHidden:NO];
             [aView setHidden:YES];
+            [self inputTagNo:tagNo];
             
         }
     }
 }
 
-//(iOS8)UIAlertControllerで項目を選択した後のアクション
-- (void) buttonPushed:(NSString*)selectTagNo {
-    if(selectTagNo != nil){
-//    NSLog(@"tagNo = %@",tagNo);
-            [postButtonItem setEnabled:YES];
-            _tagNoLabel.text = [NSString stringWithFormat:@"%@を送信します",selectTagNo];
-            [_tagNoLabel setHidden:NO];
+//tagNoが選択された後のアクション
+- (void)inputTagNo:(NSString*)selectTagNo {
+    NSLog(@"%@",selectTagNo);
+    if([selectTagNo isEqualToString:@""]){
+        NSLog(@"タッグNo未入力");
+    }else{
+        UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:@"画像を送信します"
+                                            message:[NSString stringWithFormat:@"タッグNo.%@",selectTagNo]
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        // addAction
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction *action){
+                                                                  [self postData];
+                                                              }];
+        
+        [alert addAction:defaultAction];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"キャンセル"
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction *action){
+                                                                 [alert dismissViewControllerAnimated:YES
+                                                                                                     completion:nil];
+                                                             }];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+
+//            [postButtonItem setEnabled:YES];
+//            _tagNoLabel.text = [NSString stringWithFormat:@"%@を送信します",selectTagNo];
+//            [_tagNoLabel setHidden:NO];
     }
 }
 
@@ -252,7 +257,7 @@
     [self.view addSubview:_indicator];
     
     //UIImageをpngに変換(圧縮率を指定)
-    float resize = 0.4;
+    float resize = 0.3;
     UIImage* originalImage = _myImageView.image;
     CGSize size = CGSizeMake(originalImage.size.width*resize, originalImage.size.height*resize);
     UIGraphicsBeginImageContext(size);
@@ -316,17 +321,42 @@
         NSLog(@"%@",returnString);
         //サーバーから帰ってきた値がOKだった時の処理
         if([returnString  isEqual: @"OK"]){
-            NSString *alertMessage = [NSString stringWithFormat:@"%@を送信しました",_naviTitle.title];
-            alert2 = [[UIAlertView alloc] init];
-            alert2.message = alertMessage;
-            alert2.delegate = self;
-            alert2.title = @"送信完了";
-            [alert2 addButtonWithTitle:@"OK"];
-            alert2.tag = 2;
-            [alert2 show];
+            [self postIBM:tagNo];
+            NSString *OKNG = [IBMData objectForKey:@"OKNG"];
+            
+            if([OKNG  isEqual: @"0"]){
+                NSLog(@"OK");
 
+            }else {
+                NSLog(@"NG");
+            }
+            
+        NSArray *rtnMSG = [IBMData objectForKey:@"RTNMSG"];
+            
+            NSString *string = rtnMSG[0];
+            NSLog(@"%@",string);
+            
+            UIAlertController *postedAlert =
+            [UIAlertController alertControllerWithTitle:@"送信完了"
+                                                message:string
+                                         preferredStyle:UIAlertControllerStyleAlert];
+            // addAction
+            UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
+                                                                    style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction *action){
+                                                                      //アクティビティインジケーターを停止
+                                                                      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                                                                      
+                                                                      //前画面に戻る
+                                                                      [self.navigationController popViewControllerAnimated:YES];
+                                                                  }];
+            
+            [postedAlert addAction:defaultAction];
+            [self presentViewController:postedAlert animated:YES completion:nil];
+            
             //サーバーから帰ってきた値がOKじゃなかった時の処理(NG or nil)
         }else {
+            
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"送信エラー" message:@"画像を送信できませんでした\nやり直してください。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alert show];
             [_indicator stopAnimating];
@@ -337,21 +367,8 @@
     
 }
 
-//アラートのOKボタンが押された時の処理
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == 2){
-    //アクティビティインジケーターを停止
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    //前画面に戻る
-    [self.navigationController popViewControllerAnimated:YES];
 
-    }
-}
-
-
-
+/*
 //送信ボタンが押された時の処理
 - (void)sendButton {
     if(tagNo == nil){
@@ -360,6 +377,7 @@
     }
     [self postData];
 }
+*/
 
 //キャンセルボタンが押された時の処理
 - (void)cancelButton {
@@ -367,6 +385,52 @@
     [self.navigationController popViewControllerAnimated:YES];
 
 }
+
+
+-(NSDictionary *)postIBM:(NSString *)tag{
+    IBMData = [[NSDictionary alloc]init];
+    
+    NSString *deviceName = [[UIDevice currentDevice] name];
+    NSString *iPadName = [deviceName uppercaseString];
+    
+    // キーチェーンアクセスから識別子を取得
+    LUKeychainAccess *keychainAccess = [LUKeychainAccess standardKeychainAccess];
+    NSString *idfv = [keychainAccess stringForKey:@"idfv"];
+    if(idfv == nil){
+        //IDFVの取得
+        NSUUID *uuid = [[UIDevice currentDevice] identifierForVendor];
+        idfv = uuid.UUIDString;
+        
+        //保存
+        [keychainAccess setString:idfv forKey:@"idfv"];
+        
+    }
+
+
+    NSString *userData = [NSString stringWithFormat:@"%@&IDENTIFIER=%@&PRCID=HBR001&PRC_TYP=OTH&TAGNO=%@",iPadName,idfv,tag];
+    
+    NSString *path = [@"http://maru8ibm.maruhachi.local:8080/htp2/wah001cl.pgm?COMPUTER=" stringByAppendingString:userData];
+    NSLog(@"url = %@", path);
+    
+    NSURL *url = [NSURL URLWithString:path];
+    //リクエストをするためのオブジェクトを作成 timeoutを3秒に設定
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:3.0];
+    //データの取得を開始
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    
+    //データの取得に失敗したらアラートを表示
+    if(data == nil){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"VPN接続が確認できません" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    }else{
+        NSError *error;
+        //サーバーから返ってきた値を、JSON型で格納する。
+        IBMData = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingMutableLeaves error:&error];
+    }
+    
+    return IBMData;
+}
+
 
 
 @end
