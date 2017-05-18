@@ -157,7 +157,7 @@
 
     //業務コードがGXXXの時は、カメラを起動して画像をアップロード
     if([_gyomuCD1[_buttonTag] hasPrefix:@"G"]){
-        AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         delegate.buttonTag = (int)button.tag;
         delegate.infoDic = infoDic1;
         
@@ -194,7 +194,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self dismissViewControllerAnimated:NO completion:nil];
     
     PhotoViewController *photo = [self.storyboard instantiateViewControllerWithIdentifier:@"photo"];
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     delegate.image = img;
     
     [self.navigationController pushViewController:photo animated:YES];

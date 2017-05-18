@@ -51,7 +51,7 @@
     
     [self setToolbarItems:[NSArray arrayWithObjects:cancelButtonItem, flexSpace, tagNoButtonItem, flexSpace, nil] animated:YES];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     _myImageView.image = delegate.image;
     _infoDic = delegate.infoDic;
     _buttonTag = delegate.buttonTag;
