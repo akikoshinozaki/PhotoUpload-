@@ -42,7 +42,7 @@
     
     NSString *userData = [NSString stringWithFormat:@"%@&IDENTIFIER=%@&PRCID=HIC002&PRC_TYP=OTH&GYOMUCD=%@&IRAIHI=%@&IRAITM=%@",iPadName,idfv,buttonCD,strIRAIHI,strIRAITM];
     
-    NSString *path = [@"http://maru8ibm.maruhachi.local:8080/htp2/wah001cl.pgm?COMPUTER=" stringByAppendingString:userData];
+    NSString *path = [@"https://maru8ibm.maruhachi.local/htp2/wah001cl.pgm?COMPUTER=" stringByAppendingString:userData];
     NSLog(@"url = %@", path);
     
     NSURL *url = [NSURL URLWithString:path];
